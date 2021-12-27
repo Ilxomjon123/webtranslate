@@ -6,7 +6,7 @@
         role="group"
         aria-label="Basic radio toggle button group"
       >
-        <select class="btn btn-outline-secondary" @click="isLatin = true">
+        <select class="btn btn-outline-secondary">
           <option value="uz">Uzbek</option>
           <option value="en">English</option>
           <option value="ru">Russian</option>
@@ -14,7 +14,7 @@
         <button class="btn-secondary">
           <i class="bi bi-arrow-left-right" />
         </button>
-        <select class="btn btn-outline-secondary" @click="isLatin = true">
+        <select class="btn btn-outline-secondary">
           <option value="en">English</option>
           <option value="uz">Uzbek</option>
           <option value="ru">Russian</option>
@@ -26,6 +26,7 @@
         <textarea
           autofocus
           v-model="msg"
+          @input="translate"
           class="form-control custom-textarea"
           rows="10"
           maxlength="5000"
@@ -41,7 +42,7 @@
           class="form-control custom-textarea"
           rows="10"
           readonly
-          :value="converted"
+          :value="translated"
           id="editor"
         ></textarea>
         <p></p>
@@ -60,11 +61,13 @@
 
 <script>
 import { toCryllic, toLatin } from "../services/convert";
+import axios from 'axios'
 export default {
   data() {
     return {
       msg: "",
       isLatin: true,
+      translated: "",
     };
   },
   methods: {
@@ -80,12 +83,31 @@ export default {
     },
     clear() {
       this.msg = "";
+      this.translated = "";
+    },
+    translate() {
+      try{
+        const vm = this;
+        axios.get('http://127.0.0.1:8000/api/', {
+          params:{
+            'text': this.msg,
+            'from_lang': 3,
+            'to_lang': 2
+          },
+          headers:{
+            'Content-Type': 'application/json',
+          }
+        }).then(data => {
+          vm.translated = data.data.result;
+        });
+      } catch (e){
+        console.log(e);
+      }
+      // return !this.isLatin ? toLatin(this.msg) : toCryllic(this.msg);
     },
   },
   computed: {
-    converted() {
-      return !this.isLatin ? toLatin(this.msg) : toCryllic(this.msg);
-    },
+    
   },
 };
 </script>
