@@ -6,7 +6,7 @@
         role="group"
         aria-label="Basic radio toggle button group"
       >
-        <select class="form-select bg-dark text-white" v-model="from_lang">
+        <select class="form-select bg-secondary text-white" v-model="from_lang">
           <option
             v-for="(item, index) in langs"
             :key="index"
@@ -15,10 +15,10 @@
             {{ item.text }}
           </option>
         </select>
-        <button class="btn btn-secondary" @click="swapLang">
+        <button class="btn" @click="swapLang">
           <i class="bi bi-arrow-left-right" />
         </button>
-        <select class="form-select bg-dark text-white" v-model="to_lang">
+        <select class="form-select bg-secondary text-white" v-model="to_lang">
           <option
             v-for="(item, index) in langs"
             :key="index"
@@ -35,19 +35,19 @@
           autofocus
           v-model="msg"
           @input="translate"
-          class="form-control custom-textarea"
+          class="form-control"
           rows="10"
           maxlength="5000"
         ></textarea>
-        <p class="text-end">{{ msg.length }}/5000</p>
-        <b-button class="px-5" variant="secondary" @click="clear"
+        <p class="text-end text-dark">{{ msg.length }}/5000</p>
+        <b-button class="px-5 text-white" variant="warning" @click="clear"
           >Clear</b-button
         >
       </b-col>
       <b-col md="6" class="text-center text-md-end mb-3">
         <!-- <p class="text-start m-0">Natija</p> -->
         <textarea
-          class="form-control custom-textarea"
+          class="form-control"
           rows="10"
           readonly
           :value="translated"
@@ -56,12 +56,16 @@
         <p></p>
         <br />
         <b-button-group class="float-start">
-          <b-button><i class="bi bi-hand-thumbs-up-fill" /></b-button>
-          <b-button
+          <b-button variant="warning" class="text-white"
+            ><i class="bi bi-hand-thumbs-up-fill"
+          /></b-button>
+          <b-button variant="warning" class="text-white"
             ><i class="bi bi-hand-thumbs-up-fill rotate-180"
           /></b-button>
         </b-button-group>
-        <b-button class="px-5" variant="secondary" @click="copy">Copy</b-button>
+        <b-button class="px-5 text-white" variant="warning" @click="copy"
+          >Copy</b-button
+        >
       </b-col>
     </b-row>
   </b-container>
