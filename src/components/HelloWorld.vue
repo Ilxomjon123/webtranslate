@@ -6,18 +6,26 @@
         role="group"
         aria-label="Basic radio toggle button group"
       >
-        <select class="btn btn-outline-secondary">
-          <option value="uz">Uzbek</option>
-          <option value="en">English</option>
-          <option value="ru">Russian</option>
+        <select class="form-select bg-dark text-white" v-model="from_lang">
+          <option
+            v-for="(item, index) in langs"
+            :key="index"
+            :value="item.value"
+          >
+            {{ item.text }}
+          </option>
         </select>
-        <button class="btn-secondary">
+        <button class="btn btn-secondary" @click="swapLang">
           <i class="bi bi-arrow-left-right" />
         </button>
-        <select class="btn btn-outline-secondary">
-          <option value="en">English</option>
-          <option value="uz">Uzbek</option>
-          <option value="ru">Russian</option>
+        <select class="form-select bg-dark text-white" v-model="to_lang">
+          <option
+            v-for="(item, index) in langs"
+            :key="index"
+            :value="item.value"
+          >
+            {{ item.text }}
+          </option>
         </select>
       </div>
 
@@ -60,14 +68,29 @@
 </template>
 
 <script>
-import { toCryllic, toLatin } from "../services/convert";
-import axios from 'axios'
+import axios from "axios";
 export default {
   data() {
     return {
       msg: "",
       isLatin: true,
       translated: "",
+      from_lang: 1,
+      to_lang: 2,
+      langs: [
+        {
+          value: 1,
+          text: "Uzbek",
+        },
+        {
+          value: 2,
+          text: "Russian",
+        },
+        {
+          value: 3,
+          text: "English",
+        },
+      ],
     };
   },
   methods: {
@@ -81,34 +104,51 @@ export default {
       /* Copy the text inside the text field */
       navigator.clipboard.writeText(copyText.value);
     },
+    swapLang() {
+      const temp = this.to_lang;
+      this.to_lang = this.from_lang;
+      this.from_lang = temp;
+    },
     clear() {
       this.msg = "";
       this.translated = "";
     },
     translate() {
-      try{
+      try {
         const vm = this;
-        axios.get('http://127.0.0.1:8000/api/', {
-          params:{
-            'text': this.msg,
-            'from_lang': 3,
-            'to_lang': 2
-          },
-          headers:{
-            'Content-Type': 'application/json',
-          }
-        }).then(data => {
-          vm.translated = data.data.result;
-        });
-      } catch (e){
+        axios
+          .get("http://127.0.0.1:8000/api/", {
+            params: {
+              text: this.msg,
+              from_lang: this.from_lang,
+              to_lang: this.to_lang,
+            },
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+          .then((data) => {
+            vm.translated = data.data.result;
+          });
+      } catch (e) {
         console.log(e);
       }
       // return !this.isLatin ? toLatin(this.msg) : toCryllic(this.msg);
     },
   },
-  computed: {
-    
+  watch: {
+    from_lang(to, from) {
+      if (this.to_lang == to) {
+        this.to_lang = from;
+      }
+    },
+    to_lang(to, from) {
+      if (this.from_lang == to) {
+        this.from_lang = from;
+      }
+    },
   },
+  computed: {},
 };
 </script>
 
@@ -123,11 +163,9 @@ export default {
 .custom-textarea:read-only {
   background: rgb(58, 57, 61);
 }
-select.btn {
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  appearance: none;
-  color: white;
+
+select {
+  border: none;
   font-size: x-large;
 }
 
