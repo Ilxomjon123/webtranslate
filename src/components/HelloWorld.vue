@@ -121,7 +121,7 @@ export default {
       try {
         const vm = this;
         axios
-          .get("http://127.0.0.1:8000/api/", {
+          .get("http://172.16.222.82:9000/api/", {
             params: {
               text: this.msg,
               from_lang: this.from_lang,
