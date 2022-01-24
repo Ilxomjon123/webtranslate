@@ -11,9 +11,7 @@
             v-for="(item, index) in langs"
             :key="index"
             :value="item.value"
-          >
-            {{ item.text }}
-          </option>
+          >{{ item.text }}</option>
         </select>
         <button class="btn" @click="swapLang">
           <i class="bi bi-arrow-left-right" />
@@ -23,9 +21,7 @@
             v-for="(item, index) in langs"
             :key="index"
             :value="item.value"
-          >
-            {{ item.text }}
-          </option>
+          >{{ item.text }}</option>
         </select>
       </div>
 
@@ -40,9 +36,7 @@
           maxlength="5000"
         ></textarea>
         <p class="text-end text-dark">{{ msg.length }}/5000</p>
-        <b-button class="px-5 text-white" variant="warning" @click="clear"
-          >Clear</b-button
-        >
+        <b-button class="px-5 text-white" variant="warning" @click="clear">Clear</b-button>
       </b-col>
       <b-col md="6" class="text-center text-md-end mb-3">
         <!-- <p class="text-start m-0">Natija</p> -->
@@ -56,16 +50,14 @@
         <p></p>
         <br />
         <b-button-group class="float-start">
-          <b-button variant="warning" class="text-white"
-            ><i class="bi bi-hand-thumbs-up-fill"
-          /></b-button>
-          <b-button variant="warning" class="text-white"
-            ><i class="bi bi-hand-thumbs-up-fill rotate-180"
-          /></b-button>
+          <b-button variant="warning" class="text-white">
+            <i class="bi bi-hand-thumbs-up-fill" />
+          </b-button>
+          <b-button variant="warning" class="text-white">
+            <i class="bi bi-hand-thumbs-up-fill rotate-180" />
+          </b-button>
         </b-button-group>
-        <b-button class="px-5 text-white" variant="warning" @click="copy"
-          >Copy</b-button
-        >
+        <b-button class="px-5 text-white" variant="warning" @click="copy">Copy</b-button>
       </b-col>
     </b-row>
   </b-container>
@@ -121,7 +113,7 @@ export default {
       try {
         const vm = this;
         axios
-          .get("http://172.16.222.82:9000/api/", {
+          .get("http://translater.uz:9000/api/", {
             params: {
               text: this.msg,
               from_lang: this.from_lang,
@@ -158,6 +150,13 @@ export default {
 
 <style scoped>
 .custom-textarea,
+.custom-textarea:focus {
+  background: rgb(37, 36, 39);
+  border: none;
+  color: white;
+  font: bold;
+}
+.custom-textar .custom-textarea,
 .custom-textarea:focus {
   background: rgb(37, 36, 39);
   border: none;
