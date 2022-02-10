@@ -53,10 +53,27 @@
           <b-button variant="warning" class="text-white">
             <i class="bi bi-hand-thumbs-up-fill" />
           </b-button>
-          <b-button variant="warning" class="text-white">
+          <b-button variant="warning" class="text-white" id="dislike-button">
             <i class="bi bi-hand-thumbs-up-fill rotate-180" />
           </b-button>
         </b-button-group>
+        <b-popover target="dislike-button" triggers="click" placement="bottom">
+          <template #title>
+            <b>Thanks for feedback</b>
+            <br />You can suggest a translation
+          </template>
+          <form @submit.prevent="dislikeSubmit">
+            <b-form-textarea v-model="suggestion" />
+            <div>
+              <b-button
+                type="submit"
+                variant="primary"
+                class="w-100 mt-3"
+              >Submit</b-button>
+              <b-button class="mt-3 w-100" @click="closePopover">Cancel</b-button>
+            </div>
+          </form>
+        </b-popover>
         <b-button class="px-5 text-white" variant="warning" @click="copy">Copy</b-button>
       </b-col>
     </b-row>
@@ -73,6 +90,8 @@ export default {
       translated: "",
       from_lang: 1,
       to_lang: 2,
+      showDislikePopover: false,
+      suggestion: "",
       langs: [
         {
           value: 1,
@@ -99,6 +118,7 @@ export default {
 
       /* Copy the text inside the text field */
       navigator.clipboard.writeText(copyText.value);
+      document.execCommand('copy');
     },
     swapLang() {
       const temp = this.to_lang;
@@ -131,6 +151,13 @@ export default {
       }
       // return !this.isLatin ? toLatin(this.msg) : toCryllic(this.msg);
     },
+    dislikeSubmit() {
+      this.suggestion = '';
+      this.closePopover()
+    },
+    closePopover() {
+      document.getElementById('dislike-button').click();
+    }
   },
   watch: {
     from_lang(to, from) {
