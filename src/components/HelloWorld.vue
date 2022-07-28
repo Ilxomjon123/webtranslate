@@ -6,7 +6,7 @@
         role="group"
         aria-label="Basic radio toggle button group"
       >
-        <select class="form-select bg-secondary text-white" v-model="from_lang">
+        <select class="form-select bg-custom" v-model="from_lang">
           <option
             v-for="(item, index) in langs"
             :key="index"
@@ -16,7 +16,7 @@
         <button class="btn" @click="swapLang">
           <i class="bi bi-arrow-left-right" />
         </button>
-        <select class="form-select bg-secondary text-white" v-model="to_lang">
+        <select class="form-select bg-custom" v-model="to_lang">
           <option
             v-for="(item, index) in langs"
             :key="index"
@@ -25,7 +25,7 @@
         </select>
       </div>
 
-      <b-col md="6" class="text-center text-md-start mb-3">
+      <b-col md="6" class="text-center text-md-end mb-3">
         <!-- <p class="text-start m-0">Maksimum belgilar soni: 5000</p> -->
         <textarea
           autofocus
@@ -36,7 +36,8 @@
           maxlength="5000"
         ></textarea>
         <p class="text-end text-dark">{{ msg.length }}/5000</p>
-        <b-button class="px-5 text-white" variant="warning" @click="clear">Clear</b-button>
+          <b-button class="px-5 text-white btn-custom mr-auto float-start" variant="warning" @click="clear">Clear</b-button>
+          <b-button class="text-white btn-custom" variant="warning"><i class="bi bi-mic-fill"></i></b-button>
       </b-col>
       <b-col md="6" class="text-center text-md-end mb-3">
         <!-- <p class="text-start m-0">Natija</p> -->
@@ -50,10 +51,10 @@
         <p></p>
         <br />
         <b-button-group class="float-start">
-          <b-button variant="warning" class="text-white">
+          <b-button variant="warning" class="text-white btn-custom">
             <i class="bi bi-hand-thumbs-up-fill" />
           </b-button>
-          <b-button variant="warning" class="text-white" id="dislike-button">
+          <b-button variant="warning" class="text-white btn-custom" id="dislike-button">
             <i class="bi bi-hand-thumbs-up-fill rotate-180" />
           </b-button>
         </b-button-group>
@@ -67,14 +68,13 @@
             <div>
               <b-button
                 type="submit"
-                variant="primary"
-                class="w-100 mt-3"
+                class="w-100 mt-3 btn-custom"
               >Submit</b-button>
               <b-button class="mt-3 w-100" @click="closePopover">Cancel</b-button>
             </div>
           </form>
         </b-popover>
-        <b-button class="px-5 text-white" variant="warning" @click="copy">Copy</b-button>
+        <b-button class="px-5 text-white btn-custom" variant="warning" @click="copy">Copy</b-button>
       </b-col>
     </b-row>
   </b-container>
@@ -207,5 +207,14 @@ select {
   -o-transform: rotate(180deg);
   transform: rotate(180deg);
   display: inline-block;
+}
+.btn-custom{
+  background-color: #00b8ad;
+  border-color: #00b8ad;
+}
+.bg-custom{
+  background-color: #e4ecf0;
+  border-color: #e4ecf0;
+  color: #202525;
 }
 </style>
