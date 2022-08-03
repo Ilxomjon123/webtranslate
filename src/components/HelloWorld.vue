@@ -133,7 +133,7 @@ export default {
       try {
         const vm = this;
         axios
-          .get("http://translater.uz:9000/api/", {
+          .get("http://89.249.63.227:8080/api/", {
             params: {
               text: this.msg,
               from_lang: this.from_lang,
